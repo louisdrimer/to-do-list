@@ -1,3 +1,5 @@
+import { todoList } from "./todolist.js";
+
 // Project code
 
 // Details for a project item
@@ -6,6 +8,7 @@ class Project {
         this.name = name;
         this.description = description;
     }
+    todoItems = [];
 }
 
 // Create a new project item
@@ -14,19 +17,43 @@ function createNewProject(name) {
     return project;
 }
 
-// Edit a given project item
-function updateTodoProject(todo, project = "default") {
-    todo.project = project;
+// Add a project to the todo list
+function addProjectToTodoList(project) {
+    todoList.push(project);
 }
 
-// Assign a todo to a project
-function assignTodoToProject(todo, project) {
-    // code
+//----------------------------------------------
+
+// Create default project and add to todo list
+addProjectToTodoList(createNewProject("Default"));
+
+//----------------------------------------------
+
+// Find project in the todo list
+function findProjectInTodoList(projectName) {
+    return todoList.find((project) => project.name == projectName);
 }
 
-// Remove a todo from a project
-function removeTodoFromProject(todo, project) {
-    // code
+function findProjectIndex(projectName) {
+    return todoList.findIndex((project) => project.name == projectName)
 }
 
-export {createNewProject, updateTodoProject, assignTodoToProject, removeTodoFromProject};
+// Edit a project name
+function editProjectName(projectName, newName) {
+    let project = findProjectInTodoList(projectName);
+    project.name = newName;
+}
+
+// Edit a project description
+function editProjectDescription(projectName, newDescription) {
+    let project = findProjectInTodoList(projectName);
+    project.description = newDescription;
+}
+
+// Remove a project from the todo list
+function removeProjectFromTodoList(projectName) {
+    let projectIndex = findProjectIndex(projectName);
+    todoList.splice(projectIndex, 1);
+}
+
+export { createNewProject, addProjectToTodoList, findProjectInTodoList, findProjectIndex, editProjectName, editProjectDescription, removeProjectFromTodoList };
